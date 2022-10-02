@@ -9,7 +9,7 @@ app.use(express.json());
 
 // log all endpoints
 app.all("*", (req, res, next) => {
-  console.log("req.url", req.url);
+  console.log({ method: req.method, url: req.url });
   next();
 });
 
@@ -29,3 +29,5 @@ app.all("*", (req, res) => {
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
+
+module.exports = app;

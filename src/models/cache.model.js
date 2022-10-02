@@ -2,7 +2,7 @@ module.exports = (mongoose) => {
   var schema = mongoose.Schema(
     {
       value: String,
-      updatedAt: { type: Date, expires: "5m", default: Date.now },
+      updatedAt: { type: Date, expires: "1h", default: Date.now }, // TTL is 1 HOUR
     },
     { timestamps: true }
   );
