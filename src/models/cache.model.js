@@ -3,7 +3,7 @@ module.exports = (mongoose) => {
     {
       key: String,
       value: String,
-      updatedAt: { type: Date, expires: "1m", default: Date.now },
+      updatedAt: { type: Date, expires: "5m", default: Date.now },
     },
     { timestamps: true }
   );
