@@ -14,7 +14,7 @@ router.post("/", cacheController.createOrUpdate);
 // removes a given key from the cache
 router.delete("/:id", cacheController.delete);
 
-// // removes all keys from the cache
-// router.delete("/", cacheController.deleteAll);
+// removes all keys from the cache
+router.delete("/", cacheController.deleteAll);
 
 module.exports = router;

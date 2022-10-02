@@ -120,3 +120,19 @@ exports.delete = (req, res) => {
       });
     });
 };
+
+// removes all keys from the cache
+exports.deleteAll = (req, res) => {
+  Cache.deleteMany({})
+    .then((data) => {
+      res.send({
+        message: `${data.deletedCount} Caches were deleted successfully!`,
+      });
+    })
+    .catch((err) => {
+      console.log(err.message);
+      return res.status(500).send({
+        message: "something went wrong",
+      });
+    });
+};
