@@ -8,8 +8,8 @@ router.get("/:id", cacheController.findOne);
 // returns all stored keys in the cache
 router.get("/", cacheController.findAll);
 
-// // create and update the data for a given key
-// router.post("/", cacheController.create);
+// create and update the data for a given key
+router.post("/", cacheController.createOrUpdate);
 
 // // removes a given key from the cache
 // router.delete("/:id", cacheController.delete);

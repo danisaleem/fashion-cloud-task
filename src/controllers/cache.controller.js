@@ -69,30 +69,28 @@ exports.findAll = (req, res) => {
 };
 
 // create and update the data for a given key
-exports.create = (req, res) => {
-  // Validate request
+exports.createOrUpdate = async (req, res) => {
+  try {
+    const id = req.body.id;
+    const value = req.body.value;
 
-  if (!req.body.value) {
-    res.status(400).send({ message: "value can not be empty!" });
-    return;
-  }
+    // validation
+    if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+      throw new Error("Invalid key");
+    }
 
-  // Create a Cache
-  const cache = new Cache({
-    key: uuidv4(),
-    value: req.body.value,
-  });
+    const filter = { _id: id };
+    const update = { value: value };
 
-  // Save Cache in the database
-  cache
-    .save(cache)
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      console.log(err.message);
-      res.status(500).send({
-        message: "something went wrong",
-      });
+    const cache = await Cache.findOneAndUpdate(filter, update, {
+      new: true, // returnns newly created cache
+      upsert: true, // Make this update into an upsert
     });
+
+    res.send(cache);
+  } catch (err) {
+    return res.status(500).send({
+      message: err.message || "something went wrong",
+    });
+  }
 };
