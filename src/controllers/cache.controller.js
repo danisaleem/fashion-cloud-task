@@ -36,8 +36,9 @@ exports.findOne = async (req, res) => {
           res.send(data);
         })
         .catch((err) => {
+          console.log(err.message);
           res.status(500).send({
-            message: err.message || "something went wrong",
+            message: "something went wrong",
           });
         });
     } else {
@@ -52,7 +53,20 @@ exports.findOne = async (req, res) => {
 };
 
 // returns all stored keys in the cache
-exports.findAll = (req, res) => {};
+exports.findAll = (req, res) => {
+  const condition = {}; // no condition, findAll
+
+  Cache.find(condition)
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      console.log(err.message);
+      res.status(500).send({
+        message: "something went wrong",
+      });
+    });
+};
 
 // create and update the data for a given key
 exports.create = (req, res) => {
@@ -76,8 +90,9 @@ exports.create = (req, res) => {
       res.send(data);
     })
     .catch((err) => {
+      console.log(err.message);
       res.status(500).send({
-        message: err.message || "something went wrong",
+        message: "something went wrong",
       });
     });
 };
