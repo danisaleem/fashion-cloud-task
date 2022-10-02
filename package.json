@@ -2,7 +2,7 @@
   "name": "fashion-cloud-task",
   "version": "1.0.0",
   "description": "technical task for backend developer position at fashion cloud",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "start": "npm install && nodemon",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -24,6 +24,7 @@
   "homepage": "https://github.com/danisaleem/fashion-cloud-task#readme",
   "dependencies": {
     "express": "^4.18.1",
+    "mongoose": "^6.6.3",
     "nodemon": "^2.0.20"
   }
 }

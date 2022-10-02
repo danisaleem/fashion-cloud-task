@@ -3,7 +3,7 @@ const app = express();
 const port = process.env.PORT || 8089;
 
 app.get("/", (req, res) => {
-  res.send("Welcome to Fashion Cloud Technical Task!");
+  res.json("Welcome to Fashion Cloud Technical Task!");
 });
 
 app.listen(port, () => {
