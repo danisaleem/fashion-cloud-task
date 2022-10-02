@@ -11,8 +11,8 @@ router.get("/", cacheController.findAll);
 // create and update the data for a given key
 router.post("/", cacheController.createOrUpdate);
 
-// // removes a given key from the cache
-// router.delete("/:id", cacheController.delete);
+// removes a given key from the cache
+router.delete("/:id", cacheController.delete);
 
 // // removes all keys from the cache
 // router.delete("/", cacheController.deleteAll);

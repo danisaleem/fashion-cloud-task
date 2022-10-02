@@ -37,7 +37,7 @@ exports.findOne = async (req, res) => {
         })
         .catch((err) => {
           console.log(err.message);
-          res.status(500).send({
+          return res.status(500).send({
             message: "something went wrong",
           });
         });
@@ -46,8 +46,9 @@ exports.findOne = async (req, res) => {
       res.send(retrievedCache);
     }
   } catch (err) {
+    console.log(err.message);
     return res.status(500).send({
-      message: err.message || "something went wrong",
+      message: "something went wrong",
     });
   }
 };
@@ -62,7 +63,7 @@ exports.findAll = (req, res) => {
     })
     .catch((err) => {
       console.log(err.message);
-      res.status(500).send({
+      return res.status(500).send({
         message: "something went wrong",
       });
     });
@@ -89,8 +90,33 @@ exports.createOrUpdate = async (req, res) => {
 
     res.send(cache);
   } catch (err) {
+    console.log(err.message);
     return res.status(500).send({
-      message: err.message || "something went wrong",
+      message: "something went wrong",
     });
   }
+};
+
+// removes a given key from the cache
+exports.delete = (req, res) => {
+  const id = req.params.id;
+
+  Cache.findByIdAndRemove(id, { useFindAndModify: false })
+    .then((data) => {
+      if (!data) {
+        res.status(404).send({
+          message: `Cache not found!`,
+        });
+      } else {
+        res.send({
+          message: "Cache was deleted successfully!",
+        });
+      }
+    })
+    .catch((err) => {
+      console.log(err.message);
+      return res.status(500).send({
+        message: "something went wrong",
+      });
+    });
 };
