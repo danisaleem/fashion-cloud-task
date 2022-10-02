@@ -1,7 +1,6 @@
 module.exports = (mongoose) => {
   var schema = mongoose.Schema(
     {
-      key: String,
       value: String,
       updatedAt: { type: Date, expires: "5m", default: Date.now },
     },

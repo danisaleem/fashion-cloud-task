@@ -2,7 +2,59 @@ const db = require("../models/index.js");
 const { v4: uuidv4 } = require("uuid");
 const Cache = db.Cache;
 
-// Create and Save a new Cache
+const createCache = (_value) => {
+  // Create a Cache
+  const cache = new Cache({
+    value: _value,
+  });
+
+  // Save Cache in the database
+  return cache.save(cache);
+};
+
+// returns the cached data for a given key
+exports.findOne = async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    // param validation
+    if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+      throw new Error("Invalid key");
+    }
+
+    let retrievedCache;
+
+    await Cache.findById(id).then((data) => {
+      retrievedCache = data;
+    });
+
+    if (!retrievedCache) {
+      console.log("Cache miss");
+
+      createCache(uuidv4())
+        .then((data) => {
+          res.send(data);
+        })
+        .catch((err) => {
+          res.status(500).send({
+            message: err.message || "something went wrong",
+          });
+        });
+    } else {
+      console.log("Cache hit");
+      res.send(retrievedCache);
+    }
+  } catch (err) {
+    return res.status(500).send({
+      message: err.message || "something went wrong",
+    });
+  }
+};
+
+// returns all stored keys in the cache
+exports.findAll = (req, res) => {};
+
+// create and update the data for a given key
 exports.create = (req, res) => {
   // Validate request
 
@@ -25,7 +77,7 @@ exports.create = (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Some error occurred while creating the Cache.",
+        message: err.message || "something went wrong",
       });
     });
 };
