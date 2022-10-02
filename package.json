@@ -4,7 +4,7 @@
   "description": "technical task for backend developer position at fashion cloud",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "npm install && nodemon",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
